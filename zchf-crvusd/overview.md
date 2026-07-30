@@ -45,6 +45,6 @@ The oracle returns the USD value of 1 ZCHF while LLAMMA continues to trade and s
 | Target utilization | 80% |
 | Target borrower APR | 5.2778% |
 | Supplier APR at target utilization | 3.8% |
-| Low ratio | 0.1× |
-| High ratio | 20× |
+| Low ratio | 0.3× |
+| High ratio | 10× |
 | Rate shift | 0% |

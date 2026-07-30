@@ -4,7 +4,7 @@
 >
 > **500,000 crvUSD**
 >
-> Based only on Ethereum liquidity, assuming it remains broadly stable.
+> Based only on the 20 July 2026 Ethereum liquidity snapshot, assuming liquidity remains broadly stable.
 
 ## Price stress
 
@@ -18,7 +18,7 @@ We use a flat 10.0% stress, which is larger than the observed ZCHF drawdown and 
 
 ## Ethereum liquidity
 
-We quoted the Ethereum [Uniswap ZCHF/USDT](https://etherscan.io/address/0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF) and [Curve ZCHF/crvUSD](https://etherscan.io/address/0x027B40F5917FCd0eac57d7015e120096A5F92ca9) pools at [block 25,573,786](https://etherscan.io/block/25573786) to determine how much ZCHF can be swapped before average price impact reaches 2.3%, equal to the liquidation discount.
+We quoted the Ethereum [Curve ZCHF/crvUSD](https://etherscan.io/address/0x027B40F5917FCd0eac57d7015e120096A5F92ca9) direct pool and the [Uniswap ZCHF/USDT](https://etherscan.io/address/0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF) → [Curve USDT/crvUSD](https://etherscan.io/address/0x390f3595bCa2Df7d23783dfd126427CCeb997BF4) routed path at [block 25,573,786](https://etherscan.io/block/25573786) to determine how much ZCHF can be swapped before average price impact reaches 2.3%, equal to the liquidation discount.
 
 | Route | Path | Executable ZCHF | crvUSD out |
 |---|---|---:|---:|
@@ -26,13 +26,13 @@ We quoted the Ethereum [Uniswap ZCHF/USDT](https://etherscan.io/address/0x8E4318
 | Uniswap-routed | ZCHF → Uniswap ZCHF/USDT → Curve USDT/crvUSD → crvUSD | 428,826.67 | 519,440.38 |
 | **Combined disjoint capacity** | Both routes executed in parallel | **495,053.02** | **599,660.77** |
 
-Executable ZCHF liquidity is the maximum ZCHF that can be sold through these routes without exceeding the 2.3% average price-impact limit; it is not pool TVL. Because the routes are disjoint, their capacities can be added: 66,226.35 + 428,826.67 = 495,053.02 ZCHF. We assume this liquidity will remain broadly stable. However, the contracted Uniswap market maker has withdrawn liquidity in the past. The Frankencoin team is aware of this and will monitor Ethereum liquidity.
+Executable ZCHF liquidity is the maximum ZCHF that can be sold through these routes without exceeding the 2.3% average price-impact limit; it is not pool TVL. Because the routes are disjoint, their capacities can be added: 66,226.35 + 428,826.67 = 495,053.02 ZCHF. The 20 July 2026 calculation assumes this liquidity will remain broadly stable. However, the contracted Uniswap market maker has withdrawn liquidity in the past. The Frankencoin team is aware of this and will monitor Ethereum liquidity.
 
 ![Hourly executable ZCHF liquidity through the direct Curve and Uniswap-routed Ethereum paths.](borrow_cap_assets/ethereum_hourly_liquidity_2_3pct.png)
 
 *The green layer is the direct Curve route and the pink layer is the Uniswap-routed path. Because the routes share no pools, the stacked top is their usable combined capacity at a 2.3% maximum average price impact.*
 
-The cap uses the latest Ethereum snapshot and divides its liquidity by 1.5; it does not use the historical minimum shown in the chart. The cap should be reviewed if Ethereum liquidity is withdrawn.
+The cap uses the 20 July 2026 Ethereum snapshot and divides its liquidity by 1.5; it does not use the historical minimum shown in the chart. The cap should be reviewed if Ethereum liquidity is withdrawn.
 
 ## Base liquidity
 
@@ -64,9 +64,9 @@ Calculation settings:
 - Liquidity-contraction stress ($\lambda_{\mathrm{liq}}$) = 1.5×.
 - Price shock ($s$) = 10.0%.
 - Soft-liquidation efficiency ($\eta$) = 0%.
-- Reference price ($P_0$) = 1.239822045 crvUSD/ZCHF.
+- Reference price ($P_0$) = 1.239822045 crvUSD/ZCHF, the fee-free pre-trade marginal price of the best selected route.
 - Combined Ethereum executable liquidity ($x_{\mathrm{ETH}}^*$) = 495,053.02 ZCHF.
-- Ethereum snapshot time = 2026-07-20 12:00 UTC.
+- Ethereum snapshot time = 2026-07-20 11:59:59 UTC.
 - Ethereum snapshot block = 25,573,786.
 
 $$
@@ -109,4 +109,4 @@ The 1.5× liquidity-contraction stress is included in $K$: available Ethereum li
 | Ethereum-only calculated cap | 511,087.48 crvUSD |
 | **Initial suggested cap** | **500,000 crvUSD** |
 
-The calculated cap already includes the 1.5× liquidity-contraction stress. Ethereum liquidity alone supports 511,087.48 crvUSD, which is rounded down to an initial cap of 500,000 crvUSD. Base and CEX liquidity are disclosed but not credited.
+The calculated cap already includes the 1.5× liquidity-contraction stress. At the 20 July 2026 snapshot, Ethereum liquidity supports 511,087.48 crvUSD, which is rounded down to an initial cap of 500,000 crvUSD. Base and CEX liquidity are disclosed but not credited.

@@ -431,15 +431,15 @@ code {
             <td><code>ProxyOracle</code></td>
           </tr>
           <tr>
-            <th>Initial underlying oracle</th>
-            <td>Deployed <code>CryptoFromPoolWAgg</code></td>
+            <th>Proposed initial underlying oracle</th>
+            <td>New <code>CryptoFromPoolWAgg</code> deployment; address to be recorded after deployment</td>
           </tr>
           <tr>
-            <th>Market oracle</th>
-            <td>Proxy address returned by <code>deploy_proxy_oracle()</code></td>
+            <th>Proposed market oracle</th>
+            <td>New proxy returned by <code>deploy_proxy_oracle()</code>; address to be recorded after deployment</td>
           </tr>
           <tr>
-            <th>Factory owner</th>
+            <th>Proposed factory owner</th>
             <td>DAO ownership agent</td>
           </tr>
           <tr>
@@ -449,6 +449,8 @@ code {
         </tbody>
       </table>
     </div>
+
+    <p>These are deployment recommendations; no wrapper, proxy, or proxy-factory deployment address is specified yet.</p>
 
     <p>To change pools, we can deploy a new <code>CryptoFromPoolWAgg</code> configured for the new pool, verify its price and configuration, then do a DAO vote to call <code>replace_oracle(proxy, new_wrapper, False)</code>.</p>
 

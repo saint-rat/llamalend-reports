@@ -35,13 +35,24 @@ Assumed market-side execution cost applied before an arbitrage trade.
 ## Oracle EMA
 
 $$
+M_t=\frac{P^{\mathrm{high}}_t+P^{\mathrm{low}}_t}{2},
+\qquad
 d_t=2^{-\Delta t/T_{1/2}},
 \qquad
-P^{\mathrm{EMA}}_t
-=d_tP^{\mathrm{EMA}}_{t-1}+(1-d_t)P^{\mathrm{market}}_t
+E_t=d_tE_{t-1}+(1-d_t)M_t
 $$
 
-$P^{\mathrm{market}}_t$ is the market input, $P^{\mathrm{EMA}}_t$ is the oracle value, $T_{1/2}$ is the EMA half-life, and $\Delta t$ is elapsed time. $d_t$ is the weight retained from the previous oracle value. A longer half-life makes the oracle smoother but slower to react.
+$$
+P^{\mathrm{oracle}}_{\mathrm{ZCHF/USD},t}
+=
+E_t
+\times
+P^{\mathrm{aggregate}}_{\mathrm{crvUSD/USD},t}
+$$
+
+$P^{\mathrm{high}}_t$ and $P^{\mathrm{low}}_t$ are the market-candle values of 1 ZCHF in crvUSD, and $M_t$ is their raw midpoint. $E_t$ is the EMA-smoothed crvUSD value of 1 ZCHF, $T_{1/2}$ is the EMA half-life, and $\Delta t$ is elapsed time. $d_t$ is the weight retained from the previous EMA value.
+
+$P^{\mathrm{aggregate}}_{\mathrm{crvUSD/USD},t}$ is the contemporaneous USD value of 1 crvUSD. Multiplying it by $E_t$ produces the final ZCHF/USD oracle value. A longer half-life smooths the pool-market component but makes it slower to react.
 
 ## Simulated loss
 

@@ -318,8 +318,6 @@ code {
       <li><a href="https://etherscan.io/address/0x027b40f5917fcd0eac57d7015e120096a5f92ca9">Curve ZCHF/crvUSD</a>.</li>
     </ol>
 
-    <p>The Base Aerodrome pool used in the borrow-cap analysis is not included in this historical simulation feed.</p>
-
     <h2>Uniswap ZCHF/USDT</h2>
 
     <ul>
@@ -340,7 +338,7 @@ code {
       <img src="data_retrieval_assets/uniswap_v3_swaps_since_deployment_block_final_daily_candles.png" alt="Uniswap ZCHF USDT block-final daily candles and volume">
     </figure>
 
-    <p>There is little useful activity before 2025, so the analysis uses the most recent 18 months.</p>
+    <p>There is little useful activity before 2025, so the simulation feed is fixed to observations from 2025-01-04 20:05 through 2026-07-15 02:55 UTC.</p>
 
     <h2>Uniswap conversion to ZCHF/crvUSD</h2>
 
@@ -354,7 +352,7 @@ code {
     <p>The contemporaneous crvUSD/USDT price produces the following converted Uniswap ZCHF/crvUSD feed.</p>
 
     <figure>
-      <figcaption>18-month converted Uniswap ZCHF/crvUSD feed.</figcaption>
+      <figcaption>Converted Uniswap ZCHF/crvUSD feed for the fixed simulation period.</figcaption>
       <img src="data_retrieval_assets/zchf_crvusd_uniswap_block_final_daily_candles.png" alt="Converted Uniswap ZCHF crvUSD block-final daily candles and volume">
     </figure>
 
@@ -378,15 +376,19 @@ code {
       <img src="data_retrieval_assets/zchf_crvusd_twocrypto_block_final_daily_candles.png" alt="Curve Twocrypto ZCHF crvUSD block-final daily candles and volume">
     </figure>
 
-    <h2>Combined 18-month filtered feed</h2>
+    <h2>Combined filtered feed</h2>
 
     <p>The combined feed contains:</p>
 
     <ul>
-      <li>18 months of converted Uniswap ZCHF/crvUSD observations.</li>
-      <li>9 months of direct Curve ZCHF/crvUSD observations.</li>
-      <li>Highs and lows filtered with the centered Binance candle-filtering method.</li>
+      <li>Feed coverage = 2025-01-04 20:05 through 2026-07-15 02:55 UTC.</li>
+      <li>Feed size = 801,051 contiguous 1-minute rows.</li>
+      <li>Converted Uniswap ZCHF/crvUSD observations cover the full period.</li>
+      <li>Direct Curve ZCHF/crvUSD observations are incorporated from the pool's deployment on 2025-10-16.</li>
+      <li>The centered-10 Binance squeeze filter is applied to every OHLC field, using 5 candles before and 5 after each observation.</li>
     </ul>
+
+    <p>Because the filter uses future candles, it is an offline, non-causal outlier filter intended only for historical simulation.</p>
 
     <figure>
       <figcaption>Combined centered-10 filtered ZCHF/crvUSD feed.</figcaption>

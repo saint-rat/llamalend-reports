@@ -369,13 +369,13 @@ code {
   <main>
     <h1>ZCHF Monetary Policy</h1>
 
+    <p>Use Curve's fixed <a href="https://github.com/curvefi/curve-stablecoin/blob/70716d6868642956fa7dfd56c100274148fb0150/curve_stablecoin/mpolicies/v2/HyperbolicMP.vy"><code>HyperbolicMP</code></a>:</p>
+
     <div class="recommendation">
       Target at 80% utilization
       <strong>3.8% supplier APR</strong>
       5.2778% borrower APR.
     </div>
-
-    <p>Use Curve's fixed <a href="https://github.com/curvefi/curve-stablecoin/blob/70716d6868642956fa7dfd56c100274148fb0150/curve_stablecoin/mpolicies/v2/HyperbolicMP.vy"><code>HyperbolicMP</code></a>. A custom monetary-policy contract is not required.</p>
 
     <h2>Contract configuration</h2>
 
@@ -390,20 +390,20 @@ code {
           <tr><th>Controller</th><td>Market controller</td><td><code>&lt;CONTROLLER_ADDRESS&gt;</code></td></tr>
           <tr><th>Target utilization</th><td>80%</td><td><code>800000000000000000</code></td></tr>
           <tr><th>Target borrower APR</th><td>5.2778%</td><td><code>1673572355</code> per second</td></tr>
-          <tr><th>Low ratio</th><td>0.1× target rate at 0% utilization</td><td><code>100000000000000000</code></td></tr>
-          <tr><th>High ratio</th><td>20× target rate at 100% utilization</td><td><code>20000000000000000000</code></td></tr>
+          <tr><th>Low ratio</th><td>0.3× target rate at 0% utilization</td><td><code>300000000000000000</code></td></tr>
+          <tr><th>High ratio</th><td>10× target rate at 100% utilization</td><td><code>10000000000000000000</code></td></tr>
           <tr><th>Rate shift</th><td>0%</td><td><code>0</code></td></tr>
         </tbody>
       </table>
     </div>
 
-    <p>The 0.1× low ratio keeps borrowing inexpensive when the market is underused. The 20× high ratio increases rates sharply as available liquidity is exhausted.</p>
+    <p>The 0.3× low ratio supports supplier yield at moderate utilization while keeping underused-market borrowing relatively inexpensive. The 10× high ratio increases rates sharply as available liquidity is exhausted.</p>
 
     <h2>Rate curve</h2>
 
     <figure class="rate-chart">
       <img src="monetary_policy_assets/rate_curve.svg" alt="Borrower and supplier APR plotted against market utilization">
-      <figcaption>Borrower and supplier APR under the selected 0.1×/20× hyperbolic curve. The chart is capped at 20% APR; higher rates are shown in the table below.</figcaption>
+      <figcaption>Borrower and supplier APR under the selected 0.3×/10× hyperbolic curve. The chart is capped at 20% APR; higher rates are shown in the table below.</figcaption>
     </figure>
 
     <div class="table-wrap">
@@ -412,29 +412,19 @@ code {
           <tr><th>Utilization</th><th>Borrower APR</th><th>Supplier APR</th></tr>
         </thead>
         <tbody>
-          <tr><td>0%</td><td>0.5278%</td><td>0.0000%</td></tr>
-          <tr><td>25%</td><td>0.9407%</td><td>0.2117%</td></tr>
-          <tr><td>50%</td><td>1.7570%</td><td>0.7906%</td></tr>
-          <tr><td>70%</td><td>3.3518%</td><td>2.1117%</td></tr>
+          <tr><td>0%</td><td>1.5833%</td><td>0.0000%</td></tr>
+          <tr><td>25%</td><td>1.9130%</td><td>0.4304%</td></tr>
+          <tr><td>50%</td><td>2.5598%</td><td>1.1519%</td></tr>
+          <tr><td>70%</td><td>3.8052%</td><td>2.3973%</td></tr>
           <tr><td>80%</td><td>5.2778%</td><td>3.8000%</td></tr>
-          <tr><td>85%</td><td>7.1325%</td><td>5.4564%</td></tr>
-          <tr><td>90%</td><td>10.6434%</td><td>8.6212%</td></tr>
-          <tr><td>95%</td><td>19.8186%</td><td>16.9449%</td></tr>
-          <tr><td>99%</td><td>57.2084%</td><td>50.9727%</td></tr>
-          <tr><td>100%</td><td>105.5556%</td><td>95.0000%</td></tr>
+          <tr><td>85%</td><td>6.6643%</td><td>5.0982%</td></tr>
+          <tr><td>90%</td><td>9.2080%</td><td>7.4585%</td></tr>
+          <tr><td>95%</td><td>15.3944%</td><td>13.1622%</td></tr>
+          <tr><td>99%</td><td>35.2754%</td><td>31.4304%</td></tr>
+          <tr><td>100%</td><td>52.7778%</td><td>47.5000%</td></tr>
         </tbody>
       </table>
     </div>
-
-    <p>At 80% utilization, integer rounding produces 3.80000000% supplier APR. The curve reaches 105.56% borrower APR at 100% utilization, below the Controller's 138.63% cap, so the cap does not bind.</p>
-
-    <h2>Deployment</h2>
-
-    <p>The Controller is immutable in <code>HyperbolicMP</code>. For a new market, predict the Controller address, deploy the policy against it, create the market, and verify that the returned Controller matches the prediction.</p>
-
-    <p>The constructor values are listed in the table above and reproduced in the accompanying <code>monetary_policy_config.json</code> file.</p>
-
-    <p class="note">The Controller address remains the only unresolved constructor input.</p>
   </main>
 </body>
 </html>

@@ -54,10 +54,12 @@ Constructor order: `CryptoFromPoolWAgg(pool, N, borrowed_ix, collateral_ix, agg)
 | Setting | Value |
 |---|---|
 | Proxy implementation | `ProxyOracle` |
-| Initial underlying oracle | Deployed `CryptoFromPoolWAgg` |
-| Market oracle | Proxy address returned by `deploy_proxy_oracle()` |
-| Factory owner | DAO ownership agent |
+| Proposed initial underlying oracle | New `CryptoFromPoolWAgg` deployment; address to be recorded after deployment |
+| Proposed market oracle | New proxy returned by `deploy_proxy_oracle()`; address to be recorded after deployment |
+| Proposed factory owner | DAO ownership agent |
 | Default replacement deviation | 100 BPS (1%) |
+
+These are deployment recommendations; no wrapper, proxy, or proxy-factory deployment address is specified yet.
 
 To change pools, we can deploy a new `CryptoFromPoolWAgg` configured for the new pool, verify its price and configuration, then do a DAO vote to call `replace_oracle(proxy, new_wrapper, False)`.
 
