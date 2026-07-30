@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZCHF/crvUSD market overview</title>
+  <style>
+:root {
+  color-scheme: light;
+  --border: #999;
+  --panel: #f5f5f5;
+  --muted: #444;
+  --nav-background: #eee;
+  --link: #005ea8;
+  --link-hover: #003f73;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px 40px;
+  color: #111;
+  font-family: Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main {
+  width: 100%;
+  max-width: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 20px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  background: var(--nav-background);
+}
+
+nav a,
+nav strong {
+  display: inline-block;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+nav a,
+nav a:visited {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+nav a:hover {
+  color: var(--link-hover);
+  background: #fff;
+}
+
+nav a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 1px;
+}
+
+nav strong {
+  border-color: #aaa;
+  background: #fff;
+  color: #111;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+ul,
+ol {
+  margin-top: 0.75em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+section {
+  scroll-margin-top: 12px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 12px 0 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-panel table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+}
+
+th,
+td {
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+
+thead th {
+  background: #ddd;
+}
+
+tbody th {
+  background: #eee;
+}
+
+.formula {
+  margin: 12px 0;
+  padding: 10px 14px;
+  overflow-x: auto;
+  border: 1px solid #bbb;
+  background: var(--panel);
+}
+
+.recommendation {
+  margin: 16px 0 24px;
+  padding: 14px;
+  border: 1px solid #777;
+  background: var(--panel);
+}
+
+.recommendation strong {
+  display: block;
+  font-size: 28px;
+}
+
+figure {
+  margin: 16px 0 28px;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+figcaption {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+code {
+  padding: 1px 4px;
+  background: #eee;
+  overflow-wrap: anywhere;
+}
+
+.note,
+.muted,
+.scale-note {
+  color: var(--muted);
+}
+
+.scale-note {
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  body {
+    margin-top: 12px;
+  }
+
+  nav {
+    gap: 1px;
+  }
+
+  nav a,
+  nav strong {
+    padding: 5px 7px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
+
+@media print {
+  nav {
+    display: none;
+  }
+
+  body {
+    max-width: none;
+    margin: 0;
+  }
+}
+</style>
+  <style>
+    .parameter-table {
+      table-layout: fixed;
+    }
+
+    .parameter-table th {
+      width: 34%;
+      text-align: left;
+    }
+
+    .parameter-table td {
+      width: 66%;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <strong>Overview</strong>
+    <a href="data_retrieval.html">Data Retrieval</a>
+    <a href="ema_v2_100k/ema_selection.html">EMA Selection</a>
+    <a href="usd_oracle_parameter_sweeps_rough.html">A/Fee Sweeps</a>
+    <a href="discounts.html">Discounts</a>
+    <a href="borrow_cap.html">Borrow Cap</a>
+    <a href="oracle.html">Oracle</a>
+    <a href="monetary_policy.html">Monetary Policy</a>
+    <a href="methodology.html">Methodology</a>
+  </nav>
+
+  <main>
+    <h1>ZCHF/crvUSD Market Overview</h1>
+
+    <p>This page summarizes the recommended parameters for a crvUSD debt market using ZCHF as collateral. The linked reports contain the supporting simulations and methodology.</p>
+
+    <h2>Market settings</h2>
+
+    <div class="table-wrap">
+      <table class="parameter-table">
+        <tbody>
+          <tr><th>Borrowed asset</th><td>crvUSD</td></tr>
+          <tr><th>Collateral</th><td>ZCHF</td></tr>
+          <tr><th>Amplification (<code>A</code>)</th><td>180</td></tr>
+          <tr><th>Base fee</th><td>0.05%</td></tr>
+          <tr><th>Admin percentage</th><td>10%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Risk settings</h2>
+
+    <div class="table-wrap">
+      <table class="parameter-table">
+        <tbody>
+          <tr><th>Liquidation discount</th><td>2.3%</td></tr>
+          <tr><th>Loan discount</th><td>4.3%</td></tr>
+          <tr><th>Initial borrow cap</th><td>500,000 crvUSD</td></tr>
+          <tr><th>Approximate maximum LTV at 4 bands</th><td>94.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The maximum LTV is an estimate for a position distributed across 4 bands, not a separate market parameter.</p>
+
+    <h2>Oracle</h2>
+
+    <div class="table-wrap">
+      <table class="parameter-table">
+        <tbody>
+          <tr><th>Price output</th><td>ZCHF/USD</td></tr>
+          <tr><th>Pool EMA half-life</th><td>3,603 seconds, approximately 60 minutes</td></tr>
+          <tr><th>Curve ZCHF/crvUSD pool</th><td><a href="https://etherscan.io/address/0x027B40F5917FCd0eac57d7015e120096A5F92ca9"><code>0x027B40F5917FCd0eac57d7015e120096A5F92ca9</code></a></td></tr>
+          <tr><th>crvUSD/USD aggregator</th><td><a href="https://etherscan.io/address/0x18672b1b0c623a30089A280Ed9256379fb0E4E62"><code>0x18672b1b0c623a30089A280Ed9256379fb0E4E62</code></a></td></tr>
+          <tr><th>Wrapper</th><td><code>CryptoFromPoolWAgg</code></td></tr>
+          <tr><th>Proposed flow</th><td><code>Market → ProxyOracle → CryptoFromPoolWAgg → pool and crvUSD aggregator</code></td></tr>
+          <tr><th>Default proxy replacement deviation</th><td>100 BPS (1%)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The oracle returns the USD value of 1 ZCHF while LLAMMA continues to trade and settle in crvUSD.</p>
+
+    <h2>Monetary policy</h2>
+
+    <div class="table-wrap">
+      <table class="parameter-table">
+        <tbody>
+          <tr><th>Contract</th><td><code>HyperbolicMP</code></td></tr>
+          <tr><th>Target utilization</th><td>80%</td></tr>
+          <tr><th>Target borrower APR</th><td>5.2778%</td></tr>
+          <tr><th>Supplier APR at target utilization</th><td>3.8%</td></tr>
+          <tr><th>Low ratio</th><td>0.1×</td></tr>
+          <tr><th>High ratio</th><td>20×</td></tr>
+          <tr><th>Rate shift</th><td>0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

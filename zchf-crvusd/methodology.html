@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZCHF methodology</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --border: #999;
+      --panel: #f5f5f5;
+      --muted: #444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 16px 40px;
+      color: #111;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    nav {
+      margin-bottom: 20px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      background: #eee;
+    }
+
+    nav a,
+    nav strong {
+      display: inline-block;
+      padding: 4px 8px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+    }
+
+    section {
+      scroll-margin-top: 12px;
+    }
+
+    dl {
+      display: grid;
+      grid-template-columns: minmax(170px, 230px) 1fr;
+      margin: 12px 0 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    dt,
+    dd {
+      margin: 0;
+      padding: 7px 9px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    dt {
+      border-left: 1px solid var(--border);
+      background: #eee;
+      font-weight: bold;
+    }
+
+    .formula {
+      margin: 12px 0;
+      padding: 10px 14px;
+      overflow-x: auto;
+      border: 1px solid #bbb;
+      background: var(--panel);
+    }
+
+    .note {
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      body {
+        margin-top: 12px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      dl {
+        display: block;
+        border: 0;
+      }
+
+      dt {
+        border-top: 1px solid var(--border);
+      }
+
+      dd {
+        border-left: 1px solid var(--border);
+      }
+    }
+
+    @media print {
+      nav {
+        display: none;
+      }
+
+      body {
+        max-width: none;
+        margin: 0;
+      }
+    }
+  </style>
+  <style>
+:root {
+  color-scheme: light;
+  --border: #999;
+  --panel: #f5f5f5;
+  --muted: #444;
+  --nav-background: #eee;
+  --link: #005ea8;
+  --link-hover: #003f73;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px 40px;
+  color: #111;
+  font-family: Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main {
+  width: 100%;
+  max-width: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 20px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  background: var(--nav-background);
+}
+
+nav a,
+nav strong {
+  display: inline-block;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+nav a,
+nav a:visited {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+nav a:hover {
+  color: var(--link-hover);
+  background: #fff;
+}
+
+nav a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 1px;
+}
+
+nav strong {
+  border-color: #aaa;
+  background: #fff;
+  color: #111;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+ul,
+ol {
+  margin-top: 0.75em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+section {
+  scroll-margin-top: 12px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 12px 0 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-panel table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+}
+
+th,
+td {
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+
+thead th {
+  background: #ddd;
+}
+
+tbody th {
+  background: #eee;
+}
+
+.formula {
+  margin: 12px 0;
+  padding: 10px 14px;
+  overflow-x: auto;
+  border: 1px solid #bbb;
+  background: var(--panel);
+}
+
+.recommendation {
+  margin: 16px 0 24px;
+  padding: 14px;
+  border: 1px solid #777;
+  background: var(--panel);
+}
+
+.recommendation strong {
+  display: block;
+  font-size: 28px;
+}
+
+figure {
+  margin: 16px 0 28px;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+figcaption {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+code {
+  padding: 1px 4px;
+  background: #eee;
+  overflow-wrap: anywhere;
+}
+
+.note,
+.muted,
+.scale-note {
+  color: var(--muted);
+}
+
+.scale-note {
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  body {
+    margin-top: 12px;
+  }
+
+  nav {
+    gap: 1px;
+  }
+
+  nav a,
+  nav strong {
+    padding: 5px 7px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
+
+@media print {
+  nav {
+    display: none;
+  }
+
+  body {
+    max-width: none;
+    margin: 0;
+  }
+}
+</style>
+</head>
+<body>
+  <nav>
+    <a href="overview.html">Overview</a>
+    <a href="data_retrieval.html">Data Retrieval</a>
+    <a href="ema_v2_100k/ema_selection.html">EMA Selection</a>
+    <a href="usd_oracle_parameter_sweeps_rough.html">A/Fee Sweeps</a>
+    <a href="discounts.html">Discounts</a>
+    <a href="borrow_cap.html">Borrow Cap</a>
+    <a href="oracle.html">Oracle</a>
+    <a href="monetary_policy.html">Monetary Policy</a>
+    <strong>Methodology</strong>
+  </nav>
+
+  <main>
+    <h1>ZCHF Methodology</h1>
+
+    <p>This page defines the terms and formulas shared by the ZCHF simulation reports. Rates are fractions inside formulas: \(0.023=2.3\%\).</p>
+
+    <section id="simulation-parameters">
+      <h2>Simulation parameters</h2>
+
+      <dl>
+        <dt>\(A\)</dt>
+        <dd>LLAMMA amplification. Approximate band width is \(1/A\), so a larger \(A\) produces narrower bands.</dd>
+
+        <dt>\(N\)</dt>
+        <dd>Number of bands across which the simulated collateral is distributed.</dd>
+
+        <dt>EMA half-life</dt>
+        <dd>Time required for the weight of an earlier oracle observation to halve. Oracle price is ZCHF/USD.</dd>
+
+        <dt>Base fee</dt>
+        <dd>Minimum fee charged on a simulated LLAMMA swap.</dd>
+
+        <dt>Dynamic-fee multiplier</dt>
+        <dd>Multiplier for the additional distance-based fee when the oracle moves outside a band's price range.</dd>
+
+        <dt>External arbitrage fee</dt>
+        <dd>Assumed market-side execution cost applied before an arbitrage trade.</dd>
+
+        <dt>Sample or window</dt>
+        <dd>1 contiguous historical price path of the stated duration.</dd>
+      </dl>
+    </section>
+
+    <section id="oracle-ema">
+      <h2>Oracle EMA</h2>
+
+      <div class="formula">
+        \[
+          d_t=2^{-\Delta t/T_{1/2}},
+          \qquad
+          P^{\mathrm{EMA}}_t
+          =d_tP^{\mathrm{EMA}}_{t-1}+(1-d_t)P^{\mathrm{market}}_t
+        \]
+      </div>
+
+      <p>\(P^{\mathrm{market}}_t\) is the market input, \(P^{\mathrm{EMA}}_t\) is the oracle value, \(T_{1/2}\) is the EMA half-life, and \(\Delta t\) is elapsed time. \(d_t\) is the weight retained from the previous oracle value. A longer half-life makes the oracle smoother but slower to react.</p>
+    </section>
+
+    <section id="loss-metrics">
+      <h2>Simulated loss</h2>
+
+      <div class="formula">
+        \[
+          L_i=1-\frac{V_{i,\mathrm{end}}}{V_{i,\mathrm{start}}}
+        \]
+      </div>
+
+      <p>\(V_{i,\mathrm{start}}\) and \(V_{i,\mathrm{end}}\) are the starting and ending values of simulated window \(i\), expressed in the borrowed asset. \(L_i\) is the value lost during soft liquidation.</p>
+
+      <ul>
+        <li><strong>Average loss:</strong> mean across all simulated windows.</li>
+        <li><strong>Median loss:</strong> middle simulated loss.</li>
+        <li><strong>Worst \(m\) loss:</strong> mean of the \(m\) largest losses, not the \(m\)-th largest observation.</li>
+        <li><strong>Maximum loss:</strong> single largest simulated loss.</li>
+      </ul>
+    </section>
+
+    <section id="range-coefficient">
+      <h2>Band value and effective haircut</h2>
+
+      <h3>Analytical coefficient</h3>
+
+      <div class="formula">
+        \[
+          C(A,N)=\frac{1}{N}\sum_{k=0}^{N-1}
+          \left(\frac{A-1}{A}\right)^{k+\frac{1}{2}}
+        \]
+      </div>
+
+      <p>\(k\) indexes the bands from \(0\) to \(N-1\). \(C(A,N)\) estimates the initial value of collateral distributed evenly across \(N\) bands, relative to its oracle value. The EMA and A/fee sweep reports use this analytical coefficient.</p>
+
+      <h3>Initialized-model coefficient</h3>
+
+      <div class="formula">
+        \[
+          C_{\mathrm{model}}=\frac{V_{\mathrm{start}}}{q_0P_0}
+        \]
+      </div>
+
+      <p>\(q_0\) is the deposited collateral and \(P_0\) is its opening oracle price. The discounts report measures \(C_{\mathrm{model}}\) from the initialized simulator, so it can differ slightly from \(C(A,N)\).</p>
+
+      <h3 id="effective-haircut">Effective haircut</h3>
+
+      <div class="formula">
+        \[
+          H(L,C)=1-(1-L)C
+        \]
+      </div>
+
+      <p>\(H\) combines the initial multi-band valuation haircut with the loss incurred during the simulation. Use \(C(A,N)\) for sweep estimates and \(C_{\mathrm{model}}\) for the final calibration.</p>
+    </section>
+
+    <section id="liquidation-discount">
+      <h2>Liquidation and loan discounts</h2>
+
+      <h3>Liquidation discount</h3>
+
+      <div class="formula">
+        \[
+          D_{\mathrm{liq}}\geq H_{\mathrm{calibration}}
+        \]
+      </div>
+
+      <p>\(H_{\mathrm{calibration}}\) is the chosen tail or maximum effective haircut. \(D_{\mathrm{liq}}\) is the protocol liquidation discount selected at or above it, then rounded to a practical parameter value.</p>
+
+      <h3 id="loan-discount">Loan discount</h3>
+
+      <div class="formula">
+        \[
+          D_{\mathrm{loan}}=D_{\mathrm{liq}}+B
+        \]
+      </div>
+
+      <p>\(B\) is the added loan buffer for risks not fully represented by historical simulation. \(D_{\mathrm{loan}}\) reduces maximum borrowing and must be larger than \(D_{\mathrm{liq}}\).</p>
+    </section>
+
+    <section id="maximum-ltv">
+      <h2>Maximum LTV</h2>
+
+      <div class="formula">
+        \[
+          \mathrm{LTV}_{\max}
+          \approx 1-D_{\mathrm{loan}}-\frac{N}{2A}
+        \]
+      </div>
+
+      <p>Maximum LTV is the approximate maximum debt divided by oracle-valued collateral for a position spread across \(N\) bands.</p>
+
+      <div class="formula">
+        \[
+          1-0.043-\frac{4}{2\times180}
+          =0.94588889
+          \approx 94.6\%
+        \]
+      </div>
+
+      <p class="note">The executable on-chain maximum may be slightly lower because of rounding, current oracle and band state, extra health, and available market liquidity.</p>
+    </section>
+
+    <section id="price-declines">
+      <h2>Price declines</h2>
+
+      <div class="formula">
+        \[
+          d=1-\frac{P_{\mathrm{end}}}{P_{\mathrm{start}}}
+        \]
+      </div>
+
+      <p>\(d\) is the decline from an earlier price \(P_{\mathrm{start}}\) to a later price \(P_{\mathrm{end}}\).</p>
+
+      <dl>
+        <dt>Exact 24-hour decline</dt>
+        <dd>Return between prices exactly 24 hours apart.</dd>
+
+        <dt>24-hour drawdown</dt>
+        <dd>Largest peak-to-later-trough decline contained within a period of no more than 24 hours.</dd>
+
+        <dt>Daily fixing decline</dt>
+        <dd>Return between official reference-rate observations on adjacent calendar days.</dd>
+      </dl>
+    </section>
+
+    <section id="monetary-policy">
+      <h2>Monetary policy</h2>
+
+      <h3>Utilization</h3>
+
+      <div class="formula">
+        \[
+          u=
+          \frac{\mathrm{total\ debt}}
+          {\mathrm{available\ balance}+\mathrm{total\ debt}-\mathrm{admin\ fees}}
+        \]
+      </div>
+
+      <p>\(u\) is the fraction of net market assets lent to borrowers, capped at \(1\).</p>
+
+      <h3>Hyperbolic borrower rate</h3>
+
+      <div class="formula">
+        \[
+          r_{\mathrm{borrower}}(u)
+          =
+          r_0\left(r_{-\infty}+\frac{A_h}{u_\infty-u}\right)+s
+        \]
+      </div>
+
+      <p>\(r_0\) is the target borrower rate at target utilization \(u_0\). \(A_h\), \(u_\infty\), and \(r_{-\infty}\) are coefficients derived by the contract from \(u_0\), the low ratio \(\alpha\), and the high ratio \(\beta\). \(s\) is the rate shift. With \(s=0\), the curve satisfies \(r(0)=\alpha r_0\), \(r(u_0)=r_0\), and \(r(1)=\beta r_0\), before the Controller's rate cap.</p>
+
+      <h3>Supplier APR</h3>
+
+      <div class="formula">
+        \[
+          r_{\mathrm{supplier}}(u)
+          =
+          r_{\mathrm{borrower}}(u)\,u\,q
+        \]
+      </div>
+
+      <p>\(q\) is the share of borrower interest distributed to suppliers. The market reports these rates as simple APR, not compounded APY.</p>
+    </section>
+
+    <section id="borrow-cap">
+      <h2>Fresh-market borrow cap</h2>
+
+      <p>For a market without live borrower positions, the fresh-market method sizes the cap from stressed executable liquidity and a conservative borrower assumption.</p>
+
+      <h3>Executable liquidity</h3>
+
+      <div class="formula">
+        \[
+          \mathrm{PI}_{\max}=D_{\mathrm{liq}},
+          \qquad
+          X_{\mathrm{stress}}
+          =\frac{1}{\lambda_{\mathrm{liq}}}
+          \max_{S\in\mathcal D}\sum_{i\in S}x_i^*
+        \]
+      </div>
+
+      <p>\(x_i^*\) is executable collateral on route \(i\), measured at the full liquidation discount, and \(\lambda_{\mathrm{liq}}\) is the liquidity-contraction factor. \(\mathcal D\) contains compatible route sets without shared pools or liquidity. Capacities within a compatible set can be added; overlapping aggregator routes cannot be double-counted.</p>
+
+      <p>Only liquidity directly executable against the debt asset on the market's chain is included. Cross-chain and CEX liquidity require a separate methodology for transfer latency, inventory exposure, fill probability, basis, and venue risks.</p>
+
+      <h3>Hard-liquidation stress</h3>
+
+      <div class="formula">
+        \[
+          L_{\mathrm{hard}}=1-D_{\mathrm{liq}},
+          \qquad
+          s_{\mathrm{trigger}}=1-\frac{L}{L_{\mathrm{hard}}},
+          \qquad
+          \phi=\max\left(0,\frac{s-s_{\mathrm{trigger}}}{s}\right)
+        \]
+      </div>
+
+      <p>\(L\) is the assumed borrower LTV, \(s\) is the selected downside shock, and \(\phi\) is the fraction of that stress beyond the borrower's buffer. \(\phi\) is a severity factor, not a probability.</p>
+
+      <h3>Cap</h3>
+
+      <div class="formula">
+        \[
+          P_s=P_0(1-s),
+          \qquad
+          C_{\mathrm{fresh}}
+          =\frac{X_{\mathrm{stress}}P_sL}{(1-\eta)\phi}
+        \]
+      </div>
+
+      <p>\(P_0\) is the current collateral price, \(P_s\) is its shocked price, and \(\eta\) is assumed soft-liquidation efficiency. Once borrowers exist, this approximation should be replaced by analysis of live positions and liquidation exposure.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZCHF oracle</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --border: #999;
+      --panel: #f5f5f5;
+      --muted: #444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 16px 40px;
+      color: #111;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    nav {
+      margin-bottom: 20px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      background: #eee;
+    }
+
+    nav a,
+    nav strong {
+      display: inline-block;
+      padding: 4px 8px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+    }
+
+    .formula {
+      margin: 12px 0;
+      padding: 10px 14px;
+      overflow-x: auto;
+      border: 1px solid #bbb;
+      background: var(--panel);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 12px 0 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    thead th,
+    tbody th {
+      background: #eee;
+    }
+
+    code {
+      padding: 1px 4px;
+      background: #eee;
+      overflow-wrap: anywhere;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      body {
+        margin-top: 12px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
+
+    @media print {
+      nav {
+        display: none;
+      }
+
+      body {
+        max-width: none;
+        margin: 0;
+      }
+    }
+  </style>
+  <style>
+:root {
+  color-scheme: light;
+  --border: #999;
+  --panel: #f5f5f5;
+  --muted: #444;
+  --nav-background: #eee;
+  --link: #005ea8;
+  --link-hover: #003f73;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px 40px;
+  color: #111;
+  font-family: Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main {
+  width: 100%;
+  max-width: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 20px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  background: var(--nav-background);
+}
+
+nav a,
+nav strong {
+  display: inline-block;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+nav a,
+nav a:visited {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+nav a:hover {
+  color: var(--link-hover);
+  background: #fff;
+}
+
+nav a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 1px;
+}
+
+nav strong {
+  border-color: #aaa;
+  background: #fff;
+  color: #111;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+ul,
+ol {
+  margin-top: 0.75em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+section {
+  scroll-margin-top: 12px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 12px 0 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-panel table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+}
+
+th,
+td {
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+
+thead th {
+  background: #ddd;
+}
+
+tbody th {
+  background: #eee;
+}
+
+.formula {
+  margin: 12px 0;
+  padding: 10px 14px;
+  overflow-x: auto;
+  border: 1px solid #bbb;
+  background: var(--panel);
+}
+
+.recommendation {
+  margin: 16px 0 24px;
+  padding: 14px;
+  border: 1px solid #777;
+  background: var(--panel);
+}
+
+.recommendation strong {
+  display: block;
+  font-size: 28px;
+}
+
+figure {
+  margin: 16px 0 28px;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+figcaption {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+code {
+  padding: 1px 4px;
+  background: #eee;
+  overflow-wrap: anywhere;
+}
+
+.note,
+.muted,
+.scale-note {
+  color: var(--muted);
+}
+
+.scale-note {
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  body {
+    margin-top: 12px;
+  }
+
+  nav {
+    gap: 1px;
+  }
+
+  nav a,
+  nav strong {
+    padding: 5px 7px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
+
+@media print {
+  nav {
+    display: none;
+  }
+
+  body {
+    max-width: none;
+    margin: 0;
+  }
+}
+</style>
+</head>
+<body>
+  <nav>
+    <a href="overview.html">Overview</a>
+    <a href="data_retrieval.html">Data Retrieval</a>
+    <a href="ema_v2_100k/ema_selection.html">EMA Selection</a>
+    <a href="usd_oracle_parameter_sweeps_rough.html">A/Fee Sweeps</a>
+    <a href="discounts.html">Discounts</a>
+    <a href="borrow_cap.html">Borrow Cap</a>
+    <strong>Oracle</strong>
+    <a href="monetary_policy.html">Monetary Policy</a>
+    <a href="methodology.html">Methodology</a>
+  </nav>
+
+  <main>
+    <h1>ZCHF Oracle</h1>
+
+    <p>The recommended oracle returns the USD value of 1 ZCHF. It combines the 3,603-second EMA from the Curve crvUSD/ZCHF pool with Curve's aggregate crvUSD/USD price.</p>
+
+    <h2>Oracle construction</h2>
+
+    <div class="formula">
+      \[
+        P_{\mathrm{ZCHF/USD}}
+        =
+        P_{\mathrm{ZCHF/crvUSD}}^{\mathrm{pool\ EMA}}
+        \times
+        P_{\mathrm{crvUSD/USD}}^{\mathrm{aggregate}}
+      \]
+    </div>
+
+    <p>In dimensional terms:</p>
+
+    <div class="formula">
+      \[
+        \frac{\mathrm{crvUSD}}{\mathrm{ZCHF}}
+        \times
+        \frac{\mathrm{USD}}{\mathrm{crvUSD}}
+        =
+        \frac{\mathrm{USD}}{\mathrm{ZCHF}}
+      \]
+    </div>
+
+    <p>The crvUSD units cancel, leaving the USD value of 1 ZCHF. All prices use 18 decimals. The wrapper adds no further EMA; the ZCHF leg is smoothed by the pool's built-in <code>price_oracle()</code>.</p>
+
+    <h2>Recommended contracts</h2>
+
+    <ol>
+      <li><a href="https://github.com/curvefi/curve-stablecoin/blob/70716d6868642956fa7dfd56c100274148fb0150/curve_stablecoin/price_oracles/proxy/ProxyOracle.vy"><code>ProxyOracle</code></a> - to set the oracle if the ZCHF/crvUSD pool is upgraded to a newer version</li>
+      <li><a href="https://github.com/curvefi/curve-stablecoin/blob/70716d6868642956fa7dfd56c100274148fb0150/curve_stablecoin/price_oracles/CryptoFromPoolWAgg.vy"><code>CryptoFromPoolWAgg</code></a> - It reads the pool's existing EMA and performs the crvUSD-to-USD conversion in 1 wrapper.</li>
+    </ol>
+
+    <p>The flow is:</p>
+    <p><code>Market → ProxyOracle → CryptoFromPoolWAgg → pool and crvUSD aggregator</code></p>
+
+    <h2>Wrapper configuration</h2>
+
+    <p>Constructor order: <code>CryptoFromPoolWAgg(pool, N, borrowed_ix, collateral_ix, agg)</code>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <th>Contract</th>
+            <td><code>CryptoFromPoolWAgg</code></td>
+          </tr>
+          <tr>
+            <th>Pool (<code>pool</code>)</th>
+            <td><a href="https://etherscan.io/address/0x027B40F5917FCd0eac57d7015e120096A5F92ca9"><code>0x027B40F5917FCd0eac57d7015e120096A5F92ca9</code></a></td>
+          </tr>
+          <tr>
+            <th>Coins (<code>N</code>)</th>
+            <td>2</td>
+          </tr>
+          <tr>
+            <th>Borrowed coin (<code>borrowed_ix</code>)</th>
+            <td>0 — crvUSD — <code>0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E</code></td>
+          </tr>
+          <tr>
+            <th>Collateral coin (<code>collateral_ix</code>)</th>
+            <td>1 — ZCHF — <code>0xB58E61C3098d85632Df34EecfB899A1Ed80921cB</code></td>
+          </tr>
+          <tr>
+            <th>Pool oracle interface</th>
+            <td><code>price_oracle()</code> with no argument; detected automatically as <code>NO_ARGUMENT = true</code></td>
+          </tr>
+          <tr>
+            <th>Pool EMA half-life</th>
+            <td>3,603 seconds, approximately 60 minutes</td>
+          </tr>
+          <tr>
+            <th>crvUSD aggregate (<code>agg</code>)</th>
+            <td><a href="https://etherscan.io/address/0x18672b1b0c623a30089A280Ed9256379fb0E4E62"><code>0x18672b1b0c623a30089A280Ed9256379fb0E4E62</code></a></td>
+          </tr>
+          <tr>
+            <th>Final output</th>
+            <td>ZCHF/USD — USD value of 1 ZCHF, scaled by \(10^{18}\)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Proxy configuration</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <th>Proxy implementation</th>
+            <td><code>ProxyOracle</code></td>
+          </tr>
+          <tr>
+            <th>Initial underlying oracle</th>
+            <td>Deployed <code>CryptoFromPoolWAgg</code></td>
+          </tr>
+          <tr>
+            <th>Market oracle</th>
+            <td>Proxy address returned by <code>deploy_proxy_oracle()</code></td>
+          </tr>
+          <tr>
+            <th>Factory owner</th>
+            <td>DAO ownership agent</td>
+          </tr>
+          <tr>
+            <th>Default replacement deviation</th>
+            <td>100 BPS (1%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>To change pools, we can deploy a new <code>CryptoFromPoolWAgg</code> configured for the new pool, verify its price and configuration, then do a DAO vote to call <code>replace_oracle(proxy, new_wrapper, False)</code>.</p>
+
+    <h2>crvUSD depeg behavior</h2>
+
+    <p>If crvUSD falls against USD while ZCHF's USD value is unchanged, the pool should quote more crvUSD per ZCHF while the aggregate reports fewer USD per crvUSD. Once both inputs reflect the move, these changes largely offset.</p>
+
+    <div class="formula">
+      \[
+        1.25\ \frac{\mathrm{crvUSD}}{\mathrm{ZCHF}}
+        \times
+        1.00\ \frac{\mathrm{USD}}{\mathrm{crvUSD}}
+        =
+        1.25\ \frac{\mathrm{USD}}{\mathrm{ZCHF}}
+      \]
+      \[
+        1.3889\ \frac{\mathrm{crvUSD}}{\mathrm{ZCHF}}
+        \times
+        0.90\ \frac{\mathrm{USD}}{\mathrm{crvUSD}}
+        \approx
+        1.25\ \frac{\mathrm{USD}}{\mathrm{ZCHF}}
+      \]
+    </div>
+
+    <p>This configuration lets LLAMMA trade and settle directly in crvUSD while valuing ZCHF independently in USD. The crvUSD aggregator removes crvUSD-only movements from the ZCHF price signal and avoids assuming crvUSD is always worth $1. During a downward crvUSD depeg, borrowers can repurchase their nominal debt more cheaply, while temporary dislocations may generate arbitrage volume and LLAMMA fees.</p>
+  </main>
+</body>
+</html>

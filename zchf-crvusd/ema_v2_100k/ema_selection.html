@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZCHF EMA selection</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --border: #999;
+      --muted: #444;
+      --reference: #fff7d6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 16px 40px;
+      color: #111;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    nav {
+      margin-bottom: 20px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      background: #eee;
+    }
+
+    nav a,
+    nav strong {
+      display: inline-block;
+      padding: 4px 8px;
+    }
+
+    h1,
+    h2 {
+      line-height: 1.2;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 12px 0 24px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 900px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    thead th {
+      background: #ddd;
+      text-align: center;
+    }
+
+    tbody th {
+      background: #eee;
+    }
+
+    tbody tr.reference th {
+      background: var(--reference);
+    }
+
+    .text {
+      text-align: left;
+      white-space: normal;
+    }
+
+    .scale-note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    code {
+      padding: 1px 4px;
+      background: #eee;
+    }
+
+    ul {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        margin-top: 12px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
+
+    @media print {
+      nav {
+        display: none;
+      }
+
+      body {
+        max-width: none;
+        margin: 0;
+      }
+    }
+  </style>
+  <style>
+    :root {
+      color-scheme: light;
+      --border: #999;
+      --panel: #f5f5f5;
+      --muted: #444;
+      --nav-background: #eee;
+      --link: #005ea8;
+      --link-hover: #003f73;
+    }
+
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 16px 40px;
+      color: #111;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    main {
+      width: 100%;
+      max-width: none;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 20px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      background: var(--nav-background);
+    }
+
+    nav a,
+    nav strong {
+      display: inline-block;
+      padding: 5px 9px;
+      border: 1px solid transparent;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    nav a,
+    nav a:visited {
+      color: var(--link);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    nav a:hover {
+      color: var(--link-hover);
+      background: #fff;
+    }
+
+    nav a:focus-visible {
+      outline: 2px solid var(--link);
+      outline-offset: 1px;
+    }
+
+    nav strong {
+      border-color: #aaa;
+      background: #fff;
+      color: #111;
+      font-weight: 400;
+      text-decoration: none;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+    }
+
+    ul,
+    ol {
+      margin-top: 0.75em;
+      margin-bottom: 1em;
+      padding-left: 2em;
+    }
+
+    section {
+      scroll-margin-top: 12px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 12px 0 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .result-panel table {
+      width: max-content;
+      min-width: 100%;
+      margin: 0;
+    }
+
+    th,
+    td {
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    thead th {
+      background: #ddd;
+    }
+
+    tbody th {
+      background: #eee;
+    }
+
+    .formula {
+      margin: 12px 0;
+      padding: 10px 14px;
+      overflow-x: auto;
+      border: 1px solid #bbb;
+      background: var(--panel);
+    }
+
+    .recommendation {
+      margin: 16px 0 24px;
+      padding: 14px;
+      border: 1px solid #777;
+      background: var(--panel);
+    }
+
+    .recommendation strong {
+      display: block;
+      font-size: 28px;
+    }
+
+    figure {
+      margin: 16px 0 28px;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    figcaption {
+      margin: 8px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    code {
+      padding: 1px 4px;
+      background: #eee;
+      overflow-wrap: anywhere;
+    }
+
+    .note,
+    .muted,
+    .scale-note {
+      color: var(--muted);
+    }
+
+    .scale-note {
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        margin-top: 12px;
+      }
+
+      nav {
+        gap: 1px;
+      }
+
+      nav a,
+      nav strong {
+        padding: 5px 7px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
+
+    @media print {
+      nav {
+        display: none;
+      }
+
+      body {
+        max-width: none;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../overview.html">Overview</a>
+    <a href="../data_retrieval.html">Data Retrieval</a>
+    <strong>EMA Selection</strong>
+    <a href="../usd_oracle_parameter_sweeps_rough.html">A/Fee Sweeps</a>
+    <a href="../discounts.html">Discounts</a>
+    <a href="../borrow_cap.html">Borrow Cap</a>
+    <a href="../oracle.html">Oracle</a>
+    <a href="../monetary_policy.html">Monetary Policy</a>
+    <a href="../methodology.html">Methodology</a>
+  </nav>
+
+  <main>
+    <h1>ZCHF EMA Selection</h1>
+
+    <h2>EMA sensitivity</h2>
+
+    <p>simulation settings:</p>
+
+    <ul>
+      <li>4 bands.</li>
+      <li>A = 140.</li>
+      <li>Duration = 1 day.</li>
+      <li>Samples = 100,000 per EMA half-life.</li>
+      <li>EMA half-lives = 10, 20, 30, 45, 60, 90, and 120 minutes.</li>
+      <li>Base fee = 0.2%.</li>
+      <li>External arbitrage fee = 0.05%.</li>
+      <li>Dynamic-fee multiplier = 0.25.</li>
+      <li>Oracle price = ZCHF/USD.</li>
+      <li>Worst 25 = average of the 25 largest losses.</li>
+    </ul>
+
+    <p class="scale-note">Colors are scaled separately within each numeric column. Lower values are green, higher values are red, and the minimum is bold. The 60-minute reference row is highlighted in the EMA column.</p>
+
+    <div class="table-wrap">
+      <table class="heatmap-columns">
+        <thead>
+          <tr>
+            <th>EMA half-life</th>
+            <th>Average loss</th>
+            <th>Median loss</th>
+            <th>Worst-25 average loss</th>
+            <th>Maximum loss</th>
+            <th>Liquidation discount from worst-25 average</th>
+            <th>Liquidation discount from maximum loss</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>10 min</th>
+            <td>0.030501%</td>
+            <td>0.003104%</td>
+            <td>1.033659%</td>
+            <td>1.034328%</td>
+            <td>2.439282%</td>
+            <td>2.439941%</td>
+          </tr>
+          <tr>
+            <th>20 min</th>
+            <td>0.029531%</td>
+            <td>0.002980%</td>
+            <td>1.023961%</td>
+            <td>1.024201%</td>
+            <td>2.429721%</td>
+            <td>2.429958%</td>
+          </tr>
+          <tr>
+            <th>30 min</th>
+            <td>0.029312%</td>
+            <td>0.002976%</td>
+            <td>1.021360%</td>
+            <td>1.022434%</td>
+            <td>2.427157%</td>
+            <td>2.428215%</td>
+          </tr>
+          <tr>
+            <th>45 min</th>
+            <td>0.028973%</td>
+            <td>0.002761%</td>
+            <td>1.014489%</td>
+            <td>1.020707%</td>
+            <td>2.420383%</td>
+            <td>2.426513%</td>
+          </tr>
+          <tr class="reference">
+            <th>60 min</th>
+            <td>0.028691%</td>
+            <td>0.002797%</td>
+            <td>1.007999%</td>
+            <td>1.013235%</td>
+            <td>2.413986%</td>
+            <td>2.419147%</td>
+          </tr>
+          <tr>
+            <th>90 min</th>
+            <td>0.028185%</td>
+            <td>0.002707%</td>
+            <td>0.958112%</td>
+            <td>0.963703%</td>
+            <td>2.364808%</td>
+            <td>2.370319%</td>
+          </tr>
+          <tr>
+            <th>120 min</th>
+            <td>0.026823%</td>
+            <td>0.002766%</td>
+            <td>0.904398%</td>
+            <td>0.921808%</td>
+            <td>2.311856%</td>
+            <td>2.329019%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>How the table is calculated: <a href="../methodology.html#loss-metrics">loss</a> and <a href="../methodology.html#liquidation-discount">liquidation-discount methodology</a>.</p>
+
+    <h2>Interpretation</h2>
+
+    <p>While slower EMAs reduce modeled losses for borrowers, they also make the oracle less responsive to changes in market prices. The ZCHF/crvUSD Curve pool currently uses an EMA half-life of 3,603 seconds (approximately 1 hour). For now, this appears to provide a reasonable balance between oracle responsiveness and borrower-loss reduction. Accordingly, a 60-minute EMA will be used for the remaining parameterization.</p>
+
+  </main>
+
+  <script>
+    function colorCells(cells) {
+      var entries = Array.from(cells).map(function (cell) {
+        return {cell: cell, value: Number.parseFloat(cell.textContent)};
+      }).filter(function (entry) {
+        return Number.isFinite(entry.value);
+      });
+
+      if (!entries.length) return;
+
+      var values = entries.map(function (entry) {
+        return entry.value;
+      });
+      var minimum = Math.min.apply(null, values);
+      var maximum = Math.max.apply(null, values);
+
+      entries.forEach(function (entry) {
+        var ratio = maximum === minimum ? 0 : (entry.value - minimum) / (maximum - minimum);
+        var hue = 120 * (1 - Math.max(0, Math.min(1, ratio)));
+        entry.cell.style.background = "hsl(" + hue.toFixed(1) + " 65% 82%)";
+        if (entry.value === minimum) entry.cell.style.fontWeight = "bold";
+      });
+    }
+
+    document.querySelectorAll(".heatmap-columns").forEach(function (table) {
+      for (var column = 1; column < table.tHead.rows[0].cells.length; column += 1) {
+        colorCells(Array.from(table.tBodies[0].rows).map(function (row) {
+          return row.cells[column];
+        }));
+      }
+    });
+  </script>
+</body>
+</html>

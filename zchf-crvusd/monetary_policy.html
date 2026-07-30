@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZCHF monetary policy</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --border: #999;
+      --panel: #f4f8f4;
+      --muted: #444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 16px 40px;
+      color: #111;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    nav {
+      margin-bottom: 20px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      background: #eee;
+    }
+
+    nav a,
+    nav strong {
+      display: inline-block;
+      padding: 4px 8px;
+    }
+
+    h1,
+    h2 {
+      line-height: 1.2;
+    }
+
+    .recommendation {
+      margin: 16px 0 24px;
+      padding: 14px;
+      border: 1px solid #777;
+      background: var(--panel);
+    }
+
+    .recommendation strong {
+      display: block;
+      font-size: 28px;
+    }
+
+    .formula {
+      margin: 12px 0;
+      padding: 10px 14px;
+      overflow-x: auto;
+      border: 1px solid #bbb;
+      background: var(--panel);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 12px 0 24px;
+    }
+
+    .rate-chart {
+      margin: 12px 0 24px;
+    }
+
+    .rate-chart img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .rate-chart figcaption {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      text-align: right;
+      vertical-align: top;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    th {
+      background: #eee;
+    }
+
+    code {
+      padding: 1px 4px;
+      background: #eee;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      body {
+        margin-top: 12px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
+
+    @media print {
+      nav {
+        display: none;
+      }
+
+      body {
+        max-width: none;
+        margin: 0;
+      }
+    }
+  </style>
+  <style>
+:root {
+  color-scheme: light;
+  --border: #999;
+  --panel: #f5f5f5;
+  --muted: #444;
+  --nav-background: #eee;
+  --link: #005ea8;
+  --link-hover: #003f73;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px 40px;
+  color: #111;
+  font-family: Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main {
+  width: 100%;
+  max-width: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 20px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  background: var(--nav-background);
+}
+
+nav a,
+nav strong {
+  display: inline-block;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+nav a,
+nav a:visited {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+nav a:hover {
+  color: var(--link-hover);
+  background: #fff;
+}
+
+nav a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 1px;
+}
+
+nav strong {
+  border-color: #aaa;
+  background: #fff;
+  color: #111;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+ul,
+ol {
+  margin-top: 0.75em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+section {
+  scroll-margin-top: 12px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 12px 0 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-panel table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+}
+
+th,
+td {
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+
+thead th {
+  background: #ddd;
+}
+
+tbody th {
+  background: #eee;
+}
+
+.formula {
+  margin: 12px 0;
+  padding: 10px 14px;
+  overflow-x: auto;
+  border: 1px solid #bbb;
+  background: var(--panel);
+}
+
+.recommendation {
+  margin: 16px 0 24px;
+  padding: 14px;
+  border: 1px solid #777;
+  background: var(--panel);
+}
+
+.recommendation strong {
+  display: block;
+  font-size: 28px;
+}
+
+figure {
+  margin: 16px 0 28px;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+figcaption {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+code {
+  padding: 1px 4px;
+  background: #eee;
+  overflow-wrap: anywhere;
+}
+
+.note,
+.muted,
+.scale-note {
+  color: var(--muted);
+}
+
+.scale-note {
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  body {
+    margin-top: 12px;
+  }
+
+  nav {
+    gap: 1px;
+  }
+
+  nav a,
+  nav strong {
+    padding: 5px 7px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
+
+@media print {
+  nav {
+    display: none;
+  }
+
+  body {
+    max-width: none;
+    margin: 0;
+  }
+}
+</style>
+</head>
+<body>
+  <nav>
+    <a href="overview.html">Overview</a>
+    <a href="data_retrieval.html">Data Retrieval</a>
+    <a href="ema_v2_100k/ema_selection.html">EMA Selection</a>
+    <a href="usd_oracle_parameter_sweeps_rough.html">A/Fee Sweeps</a>
+    <a href="discounts.html">Discounts</a>
+    <a href="borrow_cap.html">Borrow Cap</a>
+    <a href="oracle.html">Oracle</a>
+    <strong>Monetary Policy</strong>
+    <a href="methodology.html">Methodology</a>
+  </nav>
+
+  <main>
+    <h1>ZCHF Monetary Policy</h1>
+
+    <div class="recommendation">
+      Target at 80% utilization
+      <strong>3.8% supplier APR</strong>
+      5.2778% borrower APR.
+    </div>
+
+    <p>Use Curve's fixed <a href="https://github.com/curvefi/curve-stablecoin/blob/70716d6868642956fa7dfd56c100274148fb0150/curve_stablecoin/mpolicies/v2/HyperbolicMP.vy"><code>HyperbolicMP</code></a>. A custom monetary-policy contract is not required.</p>
+
+    <h2>Contract configuration</h2>
+
+    <p>Constructor order: <code>HyperbolicMP(controller, target_utilization, target_rate, low_ratio, high_ratio, rate_shift)</code>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Setting</th><th>Human value</th><th>Constructor value</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Controller</th><td>Market controller</td><td><code>&lt;CONTROLLER_ADDRESS&gt;</code></td></tr>
+          <tr><th>Target utilization</th><td>80%</td><td><code>800000000000000000</code></td></tr>
+          <tr><th>Target borrower APR</th><td>5.2778%</td><td><code>1673572355</code> per second</td></tr>
+          <tr><th>Low ratio</th><td>0.1× target rate at 0% utilization</td><td><code>100000000000000000</code></td></tr>
+          <tr><th>High ratio</th><td>20× target rate at 100% utilization</td><td><code>20000000000000000000</code></td></tr>
+          <tr><th>Rate shift</th><td>0%</td><td><code>0</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The 0.1× low ratio keeps borrowing inexpensive when the market is underused. The 20× high ratio increases rates sharply as available liquidity is exhausted.</p>
+
+    <h2>Rate curve</h2>
+
+    <figure class="rate-chart">
+      <img src="monetary_policy_assets/rate_curve.svg" alt="Borrower and supplier APR plotted against market utilization">
+      <figcaption>Borrower and supplier APR under the selected 0.1×/20× hyperbolic curve. The chart is capped at 20% APR; higher rates are shown in the table below.</figcaption>
+    </figure>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Utilization</th><th>Borrower APR</th><th>Supplier APR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0%</td><td>0.5278%</td><td>0.0000%</td></tr>
+          <tr><td>25%</td><td>0.9407%</td><td>0.2117%</td></tr>
+          <tr><td>50%</td><td>1.7570%</td><td>0.7906%</td></tr>
+          <tr><td>70%</td><td>3.3518%</td><td>2.1117%</td></tr>
+          <tr><td>80%</td><td>5.2778%</td><td>3.8000%</td></tr>
+          <tr><td>85%</td><td>7.1325%</td><td>5.4564%</td></tr>
+          <tr><td>90%</td><td>10.6434%</td><td>8.6212%</td></tr>
+          <tr><td>95%</td><td>19.8186%</td><td>16.9449%</td></tr>
+          <tr><td>99%</td><td>57.2084%</td><td>50.9727%</td></tr>
+          <tr><td>100%</td><td>105.5556%</td><td>95.0000%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>At 80% utilization, integer rounding produces 3.80000000% supplier APR. The curve reaches 105.56% borrower APR at 100% utilization, below the Controller's 138.63% cap, so the cap does not bind.</p>
+
+    <h2>Deployment</h2>
+
+    <p>The Controller is immutable in <code>HyperbolicMP</code>. For a new market, predict the Controller address, deploy the policy against it, create the market, and verify that the returned Controller matches the prediction.</p>
+
+    <p>The constructor values are listed in the table above and reproduced in the accompanying <code>monetary_policy_config.json</code> file.</p>
+
+    <p class="note">The Controller address remains the only unresolved constructor input.</p>
+  </main>
+</body>
+</html>
